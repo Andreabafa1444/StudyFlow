@@ -3,7 +3,10 @@ using StudyFlow.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// ADD MVC SUPPORT
+builder.Services.AddControllersWithViews();
+
+// DATABASE
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
@@ -21,7 +24,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthorization();
 
 app.MapStaticAssets();
 
