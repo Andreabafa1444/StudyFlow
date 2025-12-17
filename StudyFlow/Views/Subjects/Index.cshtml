@@ -1,0 +1,24 @@
+@model IEnumerable<StudyFlow.Models.Subject>
+
+<h1>Subjects</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Credits</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var subject in Model)
+    {
+        <tr>
+            <td>@subject.Name</td>
+            <td>@subject.Credits</td>
+            <td>@subject.Status</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a asp-action="Create">Create New Subject</a>

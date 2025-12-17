@@ -1,0 +1,19 @@
+@model StudyFlow.Models.Subject
+
+<h1>Create Subject</h1>
+
+<form asp-action="Create" method="post">
+
+    <div>
+        <label>Name</label>
+        <input asp-for="Name" />
+    </div>
+
+    <div>
+        <label>Credits</label>
+        <input asp-for="Credits" type="number" />
+    </div>
+
+    <button type="submit">Save</button>
+
+</form>
