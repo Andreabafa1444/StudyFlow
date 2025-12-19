@@ -6,6 +6,11 @@
 *.db-shm
 *.db-wal
 *.db
+# OS / IDE
+.vs/
+.vscode/
+*.user
+
 # User-specific files
 *.rsuser
 *.suo
