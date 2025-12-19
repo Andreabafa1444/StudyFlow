@@ -35,29 +35,46 @@ public IActionResult Create(string newSubjectId)
     
     return View(newevaluation);
 }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Evaluation newevaluation)
-        {
-            if (string.IsNullOrEmpty(newevaluation.SubjectId))
-            {
-                ModelState.AddModelError("SubjectId", "Subject ID is required");
-                return View(newevaluation);
-            }
-
-            // ✅ Remover validación del Subject si existe en ModelState
-            ModelState.Remove("Subject");
-
-            if (!ModelState.IsValid)
-            {
-                return View(newevaluation);
-            }
-
-            _context.Evaluations.Add(newevaluation);
-            _context.SaveChanges();
-            
-            return RedirectToAction("Index", "Subjects");
-        }
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Create(Evaluation newevaluation)
+{
+    if (string.IsNullOrEmpty(newevaluation.SubjectId))
+    {
+        return NotFound();
     }
+
+    // remove Subject validation
+    ModelState.Remove("Subject");
+
+    // calculate current percentage
+    var currentTotal = _context.Evaluations
+        .Where(e => e.SubjectId == newevaluation.SubjectId)
+        .Sum(e => e.Percentage);
+
+    var newTotal = currentTotal + newevaluation.Percentage;
+
+    if (newTotal > 100)
+    {
+        ModelState.AddModelError(
+            "Percentage",
+            "Total percentage cannot be more than 100%"
+        );
+
+        return View(newevaluation);
+    }
+
+    if (!ModelState.IsValid)
+    {
+        return View(newevaluation);
+    }
+
+    _context.Evaluations.Add(newevaluation);
+    _context.SaveChanges();
+
+    return RedirectToAction("Details", "Subjects", new { id = newevaluation.SubjectId });
+}
+
+       
+  }
 }
