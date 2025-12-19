@@ -1,0 +1,30 @@
+@model StudyFlow.Models.Subject
+
+<h1>@Model.Name</h1>
+<p><strong>Average:</strong> @ViewBag.Average</p>
+<p><strong>Status:</strong> @Model.Status</p>
+
+<h2>Evaluations</h2>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Percentage</th>
+        <th>Grade</th>
+    </tr>
+
+@foreach (var e in Model.Evaluations)
+{
+    <tr>
+        <td>@e.Name</td>
+        <td>@e.Percentage %</td>
+        <td>@e.Grade</td>
+    </tr>
+}
+</table>
+
+<a asp-controller="Evaluation"
+   asp-action="Create"
+   asp-route-newSubjectId="@Model.Id">
+   Add Evaluation
+</a>

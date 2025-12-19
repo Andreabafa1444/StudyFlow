@@ -1,0 +1,27 @@
+@model StudyFlow.Models.Evaluation
+
+<h1>Create Evaluation</h1>
+
+<form asp-action="Create" method="post">
+
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="SubjectId" />
+
+    <div>
+        <label>Name</label>
+        <input asp-for="Name" />
+    </div>
+
+    <div>
+        <label>Percentage</label>
+        <input asp-for="Percentage" type="number" />
+    </div>
+
+    <div>
+        <label>Grade</label>
+        <input asp-for="Grade" type="number" />
+    </div>
+
+    <button type="submit">Save</button>
+</form>
