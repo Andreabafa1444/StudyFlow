@@ -1,22 +1,50 @@
-@model IEnumerable<StudyFlow.Models.Subject>
+@model List<StudyFlow.Models.ViewModels.SubjectCardVM>
 
-<h1>Subjects</h1>
+<div class="main-container">
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Actions</th>
-    </tr>
+    <div class="welcome-section">
+        <h2 class="page-title">My Subjects</h2>
+        <p class="page-subtitle">Track your academic progress and evaluations</p>
+    </div>
 
-@foreach (var s in Model)
-{
-    <tr>
-        <td>@s.Name</td>
-        <td>@s.Status</td>
-        <td>
-            <a asp-action="Details" asp-route-id="@s.Id">Details</a>
-        </td>
-    </tr>
-}
-</table>
+    <a asp-action="Create" class="btn-add-subject">+ Add Subject</a>
+
+    <div class="subjects-grid">
+        @if (!Model.Any())
+        {
+            <div class="empty-text">No subjects yet.</div>
+        }
+        else
+        {
+            foreach (var subject in Model)
+            {
+                <div class="subject-card">
+                    <div class="card-header bg-blue"></div>
+
+                    <div class="card-content">
+                        <div class="card-top">
+                            <div>
+                                <h3 class="subject-name">@subject.Name</h3>
+                                <p class="subject-credits">Credits: @subject.Credits</p>
+                            </div>
+                            <div class="subject-icon bg-blue">📘</div>
+                        </div>
+
+                        <div class="card-stats">
+                            <span>@subject.EvaluationsCount evaluations</span>
+                            <span class="avg-value">
+                                Avg: @subject.Average.ToString("0.##")%
+                            </span>
+                        </div>
+
+                        <a asp-action="Details"
+                           asp-route-id="@subject.Id"
+                           class="btn-view-details">
+                            View details →
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

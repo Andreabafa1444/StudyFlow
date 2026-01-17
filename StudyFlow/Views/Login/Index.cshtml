@@ -1,0 +1,58 @@
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout";
+}
+
+<div class="auth-page">
+
+    <div class="auth-left">
+        <div class="auth-box">
+
+            <h1>Welcome to <span>StudyFlow</span></h1>
+            <p class="subtitle">
+                Organize your subjects and evaluations
+            </p>
+
+            @if (ViewBag.Error != null)
+            {
+                <p class="auth-error">@ViewBag.Error</p>
+            }
+
+            <form method="post" class="auth-form">
+
+                <label>Email</label>
+                <input name="email"
+                       type="email"
+                       placeholder="you@email.com"
+                       required />
+
+                <label>Password</label>
+                <input name="password"
+                       type="password"
+                       placeholder="••••••••"
+                       required />
+
+                <button type="submit" class="primary-btn">
+                    Login
+                </button>
+            </form>
+
+            <p class="switch-text">
+                Don't have an account?
+                <a asp-controller="Register" asp-action="Create">
+                    Create one
+                </a>
+            </p>
+
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <div class="image-placeholder">
+            <img src="~/images/study-login.jpg"
+                 alt="StudyFlow illustration"
+                 class="auth-image" />
+        </div>
+    </div>
+
+</div>

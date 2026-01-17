@@ -3,7 +3,10 @@ using StudyFlow.Models;
 using StudyFlow.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using StudyFlow.Models.ViewModels;
+
 namespace StudyFlow.Controllers
+
 {
   public class SubjectsController : Controller
     {
@@ -18,20 +21,43 @@ namespace StudyFlow.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            //esto es para que nadie cree subject sin logearse primero
+                var userId = HttpContext.Session.GetInt32("UserId");
+
+                 if (userId == null)
+                 {
+                    return RedirectToAction("Index", "Login");
+                 }
+
             return View();
         }
-        [HttpPost]
-        public IActionResult Create(Subject newsubject)
+       [HttpPost]
+        public IActionResult Create(Subject newSubject)
         {
-            if(!ModelState.IsValid)
-            {
-                return View(newsubject);
-            }
-            _context.Subjects.Add(newsubject);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-        //now we are going to create the Details controller
+               var userId = HttpContext.Session.GetInt32("UserId");
+
+    if (userId == null)
+    {
+        return RedirectToAction("Index", "Login");
+    }
+
+    newSubject.UserId = userId.Value;
+foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+{
+    Console.WriteLine(error.ErrorMessage);
+}
+
+    if (!ModelState.IsValid)
+    {
+        return View(newSubject);
+    }
+
+    _context.Subjects.Add(newSubject);
+    _context.SaveChanges();
+
+    return RedirectToAction(nameof(Index));        }
+
+        //now we are going to create the Details controller este necesito la evaluacion en ipad 
         [HttpGet]
           public IActionResult Details(string id )
         {
@@ -69,13 +95,35 @@ namespace StudyFlow.Controllers
             ViewBag.Average = average;
             return View(subject);
         }
+        
         //mostramos todo 
         public IActionResult Index()
-        {
-            var subjects = _context.Subjects
-                .Include (s => s.Evaluations)
-                .ToList();
-            return View(subjects);
-        }
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Index", "Login");
+
+    var subjects = _context.Subjects
+        .Include(s => s.Evaluations)
+        .Where(s => s.UserId == userId)
+        .ToList();
+
+    var subjectVMs = subjects.Select(s => new SubjectCardVM
+    {
+        Id = s.Id,                 // string
+        Name = s.Name,
+        Credits = s.Credits,
+        EvaluationsCount = s.Evaluations.Count,
+        Average = s.Evaluations.Any()
+            ? Math.Round(
+                s.Evaluations.Sum(e => e.Grade * e.Percentage / 100.0),
+                2)
+            : 0
+    }).ToList();
+
+    return View(subjectVMs);
+}
+
+
     } 
 }

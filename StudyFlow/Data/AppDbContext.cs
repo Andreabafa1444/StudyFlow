@@ -13,5 +13,6 @@ namespace StudyFlow.Data
         public DbSet<Subject> Subjects { get; set; }
 
         public DbSet<Evaluation> Evaluations { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }
