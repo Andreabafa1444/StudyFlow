@@ -22,7 +22,7 @@ namespace StudyFlow.Controllers
         [HttpPost]
         public IActionResult Index(string email, string password)
         {
-            var user = _context.User.FirstOrDefault(u => u.Email == email && u.Password == password);
+            var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
             //comprobacion de si existe o no
             if (user == null)
             {
