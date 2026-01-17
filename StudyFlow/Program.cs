@@ -3,20 +3,21 @@ using StudyFlow.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔴 IMPORTANT: fix logging (NO Windows Event Log)
+// LOGGING (Render friendly)
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-// ADD MVC SUPPORT
+// MVC
 builder.Services.AddControllersWithViews();
 
-// DATABASE
+// DATABASE (SQLite)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
-//sesion 
+
+// SESSION
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -24,30 +25,27 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-
 var app = builder.Build();
+
+// 🔥 CREATE DATABASE & TABLES (FAST MVP FIX)
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    db.Database.EnsureCreated();
 }
 
-
-// Configure the HTTP request pipeline.
+// ERROR HANDLING
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-// 🔴 COMMENT THIS FOR NOW (DEV)
-// app.UseHttpsRedirection();
-
-app.UseRouting();
-app.UseSession();
-
+// app.UseHttpsRedirection(); // optional for later
 
 app.UseStaticFiles();
+app.UseRouting();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
