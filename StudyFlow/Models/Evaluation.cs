@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudyFlow.Models
 {
@@ -14,6 +15,7 @@ namespace StudyFlow.Models
 
         public string SubjectId { get; set; } = string.Empty;
 
+        [ForeignKey("SubjectId")]
         public Subject Subject { get; set; } = null!;
     }
 }
