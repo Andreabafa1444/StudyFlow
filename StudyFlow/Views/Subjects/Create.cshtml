@@ -1,0 +1,50 @@
+@model StudyFlow.Models.Subject
+
+@{
+    ViewData["Title"] = "Create Subject";
+}
+
+<div class="main-container">
+
+    <div class="welcome-section">
+        <h2 class="page-title">Add Subject</h2>
+        <p class="page-subtitle">
+            Create a new subject to start tracking your progress
+        </p>
+    </div>
+
+    <div class="subjects-grid" style="max-width: 500px;">
+        <div class="subject-card">
+
+            <div class="card-header bg-blue"></div>
+
+            <div class="card-content">
+                <form asp-action="Create" method="post">
+
+                    <div style="margin-bottom: 1rem;">
+                        <label class="subject-credits">Name</label>
+                        <input asp-for="Name"
+                               class="form-input"
+                               placeholder="e.g. Databases"
+                               required />
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="subject-credits">Credits</label>
+                        <input asp-for="Credits"
+                               type="number"
+                               class="form-input"
+                               placeholder="e.g. 8"
+                               required />
+                    </div>
+
+                    <button type="submit" class="btn-add-subject">
+                        Save Subject
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - StudyFlow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <!-- GLOBAL NAVBAR -->
+    <header class="header">
+        <div class="header-container">
+            <span class="logo">StudyFlow</span>
+
+            <nav class="header-actions">
+                <a asp-controller="Home" asp-action="Index" class="nav-link">
+                    Home
+                </a>
+
+                <a asp-controller="Subjects" asp-action="Index" class="nav-link">
+                    Subjects
+                </a>
+
+                <a asp-controller="Login" asp-action="Index" class="nav-link">
+                    Login
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+</body>
+</html>

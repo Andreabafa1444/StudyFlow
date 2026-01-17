@@ -1,0 +1,63 @@
+@model StudyFlow.Models.Evaluation
+
+@{
+    ViewData["Title"] = "Create Evaluation";
+}
+
+<div class="main-container">
+
+    <div class="welcome-section">
+        <h2 class="page-title">Add Evaluation</h2>
+        <p class="page-subtitle">
+            Register a new evaluation for this subject
+        </p>
+    </div>
+
+    <div class="subjects-grid" style="max-width: 500px;">
+        <div class="subject-card">
+
+            <div class="card-header bg-green"></div>
+
+            <div class="card-content">
+                <form asp-action="Create" method="post">
+
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="SubjectId" />
+
+                    <div style="margin-bottom: 1rem;">
+                        <label class="subject-credits">Name</label>
+                        <input asp-for="Name"
+                               class="form-input"
+                               placeholder="e.g. Midterm Exam"
+                               required />
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label class="subject-credits">Percentage (%)</label>
+                        <input asp-for="Percentage"
+                               type="number"
+                               class="form-input"
+                               placeholder="e.g. 30"
+                               required />
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="subject-credits">Grade</label>
+                        <input asp-for="Grade"
+                               type="number"
+                               class="form-input"
+                               placeholder="e.g. 8.5"
+                               step="0.1"
+                               required />
+                    </div>
+
+                    <button type="submit" class="btn-add-subject">
+                        Save Evaluation
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

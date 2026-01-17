@@ -1,0 +1,53 @@
+@model StudyFlow.Models.User
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+}
+
+<div class="auth-page">
+
+    <div class="auth-left">
+        <div class="auth-box">
+
+            <h1>Create your <span>StudyFlow</span> account</h1>
+            <p class="subtitle">
+                Start organizing your subjects and evaluations
+            </p>
+
+            <form asp-action="Create" method="post" class="auth-form">
+
+                <label>Email</label>
+                <input asp-for="Email"
+                       type="email"
+                       placeholder="you@email.com"
+                       required />
+
+                <label>Password</label>
+                <input asp-for="Password"
+                       type="password"
+                       placeholder="••••••••"
+                       required />
+
+                <button type="submit" class="primary-btn">
+                    Create account
+                </button>
+            </form>
+
+            <p class="switch-text">
+                Already have an account?
+                <a asp-controller="Login" asp-action="Index">
+                    Login
+                </a>
+            </p>
+
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <div class="image-placeholder">
+            StudyFlow
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+@model StudyFlow.Models.Subject
+
+<div class="main-container">
+
+    <h2 class="page-title">@Model.Name</h2>
+
+    <p class="page-subtitle">
+        Average: <strong>@ViewBag.Average%</strong>
+    </p>
+
+    <a asp-controller="Evaluation"
+       asp-action="Create"
+       asp-route-newSubjectId="@Model.Id"
+       class="btn-add-subject">
+        + Add Evaluation
+    </a>
+
+    <div class="subjects-grid">
+
+        @if (!Model.Evaluations.Any())
+        {
+            <p class="empty-text">No evaluations yet.</p>
+        }
+        else
+        {
+            @foreach (var e in Model.Evaluations)
+            {
+                <div class="subject-card">
+
+                    <div class="card-header bg-green"></div>
+
+                    <div class="card-content">
+                        <h3 class="subject-name">@e.Name</h3>
+                        <p>Grade: <strong>@e.Grade</strong></p>
+                        <p>Weight: @e.Percentage%</p>
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+</div>
