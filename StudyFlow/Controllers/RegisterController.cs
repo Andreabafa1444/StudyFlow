@@ -27,7 +27,7 @@ namespace StudyFlow.Controllers
             {
                 return View(newUser);
             }
-            _context.User.Add(newUser);
+            _context.Users.Add(newUser);
             _context.SaveChanges();
             return RedirectToAction("Index","Login");
         }
